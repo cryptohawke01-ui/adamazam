@@ -33,13 +33,13 @@ const Logo = styled(Link)`
   }
 `;
 
-const MenuList = styled.ul`
+const MenuList = styled.ul<{ $isOpen: boolean }>`
   display: flex;
   list-style: none;
   gap: 2rem;
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    display: ${props => props.isOpen ? 'flex' : 'none'};
+    display: ${props => props.$isOpen ? 'flex' : 'none'};
     flex-direction: column;
     position: absolute;
     top: 100%;
@@ -93,7 +93,7 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Nav>
         <Logo to="/">ADAM AZAM</Logo>
-        <MenuList isOpen={isMenuOpen}>
+        <MenuList $isOpen={isMenuOpen}>
           {menuItems.map((item: any) => (
             <MenuItem key={item.id}>
               <MenuLink 

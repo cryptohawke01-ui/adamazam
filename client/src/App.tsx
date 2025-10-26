@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from './styles/GlobalStyle';
-import Header from './components/Header';
-import Home from './pages/Home';
+import SimpleHeader from './components/SimpleHeader';
+import SimpleHome from './pages/SimpleHome';
 import AboutBook from './pages/AboutBook';
 import AboutAuthor from './pages/AboutAuthor';
 import Blog from './pages/Blog';
@@ -17,9 +17,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-        <Header />
+        <SimpleHeader />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<SimpleHome />} />
           <Route path="/about-the-book" element={<AboutBook />} />
           <Route path="/about-the-author" element={<AboutAuthor />} />
           <Route path="/blog" element={<Blog />} />
