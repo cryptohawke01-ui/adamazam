@@ -10,10 +10,19 @@
     "build": "cd client && npm run build",
     "start": "cd server && npm start"
   },
-  "keywords": ["react", "express", "supabase", "admin-panel"],
+  "keywords": [
+    "react",
+    "express",
+    "supabase",
+    "admin-panel"
+  ],
   "author": "Adam Azam",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.76.1",
+    "bcryptjs": "^3.0.2"
   }
 }

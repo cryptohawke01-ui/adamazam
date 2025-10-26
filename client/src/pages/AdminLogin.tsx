@@ -56,6 +56,27 @@ const Input = styled.input`
   }
 `;
 
+const PasswordContainer = styled.div`
+  position: relative;
+`;
+
+const PasswordToggle = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: ${props => props.theme.colors.text};
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.875rem;
+  
+  &:hover {
+    color: ${props => props.theme.colors.accent};
+  }
+`;
+
 const SubmitButton = styled.button`
   width: 100%;
   background-color: ${props => props.theme.colors.accent};
@@ -87,11 +108,23 @@ const ErrorMessage = styled.div`
   border-radius: 4px;
 `;
 
+const InfoMessage = styled.div`
+  color: ${props => props.theme.colors.text};
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+`;
+
 const AdminLogin: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const loginMutation = useMutation(loginAdmin, {
@@ -122,6 +155,12 @@ const AdminLogin: React.FC = () => {
       <LoginCard>
         <LoginTitle>Admin Login</LoginTitle>
         
+        <InfoMessage>
+          <strong>Default Credentials:</strong><br/>
+          Email: admin@adamazam.com<br/>
+          Password: admin123
+        </InfoMessage>
+        
         {loginMutation.error && (
           <ErrorMessage>
             {loginMutation.error?.response?.data?.error || 'Login failed'}
@@ -143,14 +182,23 @@ const AdminLogin: React.FC = () => {
           
           <FormGroup>
             <Label htmlFor="password">Password</Label>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <PasswordContainer>
+              <Input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                style={{ paddingRight: '40px' }}
+              />
+              <PasswordToggle
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </PasswordToggle>
+            </PasswordContainer>
           </FormGroup>
           
           <SubmitButton 
