@@ -75,8 +75,6 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log('Login attempt for email:', email);
-
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
@@ -88,19 +86,14 @@ router.post('/login', async (req, res) => {
       .eq('email', email)
       .single();
 
-    console.log('User fetch result:', { user, fetchError });
-
     if (fetchError || !user) {
-      console.log('User not found or fetch error');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
-    console.log('Password verification result:', isValidPassword);
     
     if (!isValidPassword) {
-      console.log('Password verification failed');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 

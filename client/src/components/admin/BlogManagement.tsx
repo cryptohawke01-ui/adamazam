@@ -57,6 +57,14 @@ const BlogCard = styled.div`
   }
 `;
 
+const BlogImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+`;
+
 const BlogTitle = styled.h3`
   font-size: 1.25rem;
   color: ${props => props.theme.colors.text};
@@ -152,10 +160,12 @@ const ModalContent = styled.div`
   border-radius: 8px;
   padding: 2rem;
   width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
+  max-width: 800px;
+  max-height: 90vh;
   overflow-y: auto;
 `;
+
+// Removed unused styled components - they were defined but not used in the current implementation
 
 const ModalHeader = styled.div`
   display: flex;
@@ -242,16 +252,30 @@ const SubmitButton = styled.button`
 const BlogManagement: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBlog, setEditingBlog] = useState<any>(null);
+  // Removed unused activeTab state - tabs are not implemented in current version
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
     content: '',
-    published: false
+    image_url: '',
+    published: false,
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: '',
+    slug: '',
+    author: '',
+    reading_time: '',
+    featured: false,
+    category: '',
+    tags: ''
   });
 
   const queryClient = useQueryClient();
 
-  const { data: blogs = [], isLoading } = useQuery('blogs', getBlogs);
+  const { data: blogs, isLoading, error } = useQuery('blogs', getBlogs, {
+    retry: 1,
+    refetchOnWindowFocus: false
+  });
 
   const createBlogMutation = useMutation(createBlog, {
     onSuccess: () => {
@@ -292,7 +316,17 @@ const BlogManagement: React.FC = () => {
       title: '',
       excerpt: '',
       content: '',
-      published: false
+      image_url: '',
+      published: false,
+      meta_title: '',
+      meta_description: '',
+      meta_keywords: '',
+      slug: '',
+      author: '',
+      reading_time: '',
+      featured: false,
+      category: '',
+      tags: ''
     });
     setEditingBlog(null);
   };
@@ -317,10 +351,20 @@ const BlogManagement: React.FC = () => {
   const handleEdit = (blog: any) => {
     setEditingBlog(blog);
     setFormData({
-      title: blog.title,
-      excerpt: blog.excerpt,
-      content: blog.content,
-      published: blog.published
+      title: blog.title || '',
+      excerpt: blog.excerpt || '',
+      content: blog.content || '',
+      image_url: blog.image_url || '',
+      published: blog.published || false,
+      meta_title: blog.meta_title || '',
+      meta_description: blog.meta_description || '',
+      meta_keywords: blog.meta_keywords || '',
+      slug: blog.slug || '',
+      author: blog.author || '',
+      reading_time: blog.reading_time || '',
+      featured: blog.featured || false,
+      category: blog.category || '',
+      tags: blog.tags || ''
     });
     setIsModalOpen(true);
   };
@@ -348,6 +392,24 @@ const BlogManagement: React.FC = () => {
     return <div>Loading blogs...</div>;
   }
 
+  if (error) {
+    return (
+      <Container>
+        <Header>
+          <Title>Blog Management</Title>
+          <AddButton onClick={handleAddNew}>
+            + Add New Blog Post
+          </AddButton>
+        </Header>
+        <div style={{ color: 'red', textAlign: 'center', padding: '2rem' }}>
+          Error loading blogs: {error instanceof Error ? error.message : 'Unknown error occurred'}
+        </div>
+      </Container>
+    );
+  }
+
+  const blogsList = blogs?.blogs || [];
+
   return (
     <Container>
       <Header>
@@ -358,12 +420,26 @@ const BlogManagement: React.FC = () => {
       </Header>
 
       <BlogGrid>
-        {blogs.map((blog: any) => (
+        {blogsList.length === 0 ? (
+          <div style={{ 
+            gridColumn: '1 / -1', 
+            textAlign: 'center', 
+            padding: '3rem',
+            color: '#666'
+          }}>
+            <h3>No blog posts yet</h3>
+            <p>Click "Add New Blog Post" to create your first blog post.</p>
+          </div>
+        ) : (
+          blogsList.map((blog: any) => (
           <BlogCard key={blog.id}>
+              {blog.image_url && (
+                <BlogImage src={blog.image_url} alt={blog.title} />
+              )}
             <BlogTitle>{blog.title}</BlogTitle>
             <BlogExcerpt>{blog.excerpt}</BlogExcerpt>
             <BlogMeta>
-              <BlogDate>{new Date(blog.createdAt).toLocaleDateString()}</BlogDate>
+                <BlogDate>{new Date(blog.created_at || blog.createdAt).toLocaleDateString()}</BlogDate>
               <BlogStatus $isPublished={blog.published}>
                 {blog.published ? 'Published' : 'Draft'}
               </BlogStatus>
@@ -380,7 +456,8 @@ const BlogManagement: React.FC = () => {
               </ActionButton>
             </BlogActions>
           </BlogCard>
-        ))}
+          ))
+        )}
       </BlogGrid>
 
       <Modal $isOpen={isModalOpen}>
@@ -396,34 +473,49 @@ const BlogManagement: React.FC = () => {
           
           <Form onSubmit={handleSubmit}>
             <FormGroup>
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Title *</Label>
               <Input
                 id="title"
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 required
+                placeholder="Enter blog post title"
               />
             </FormGroup>
             
             <FormGroup>
-              <Label htmlFor="excerpt">Excerpt</Label>
+              <Label htmlFor="excerpt">Excerpt *</Label>
               <TextArea
                 id="excerpt"
                 value={formData.excerpt}
                 onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
                 required
+                placeholder="Brief description of the blog post"
+                style={{ minHeight: '100px' }}
               />
             </FormGroup>
             
             <FormGroup>
-              <Label htmlFor="content">Content</Label>
+              <Label htmlFor="image_url">Featured Image URL</Label>
+              <Input
+                id="image_url"
+                type="url"
+                value={formData.image_url}
+                onChange={(e) => setFormData({...formData, image_url: e.target.value})}
+                placeholder="https://example.com/image.jpg"
+              />
+            </FormGroup>
+            
+            <FormGroup>
+              <Label htmlFor="content">Content *</Label>
               <TextArea
                 id="content"
                 value={formData.content}
                 onChange={(e) => setFormData({...formData, content: e.target.value})}
                 required
-                style={{ minHeight: '200px' }}
+                placeholder="Write your blog post content here..."
+                style={{ minHeight: '300px' }}
               />
             </FormGroup>
             
