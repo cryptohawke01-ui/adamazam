@@ -13,10 +13,9 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Admin client for operations requiring service role key
-// Use anon key if service key is not available (for development)
-const adminKey = supabaseServiceKey && supabaseServiceKey !== 'REPLACE_WITH_REAL_SERVICE_ROLE_KEY' 
-  ? supabaseServiceKey 
-  : supabaseKey;
+// For development, we'll use the anon key since we don't have a real service key
+// In production, you should use the actual service role key
+const adminKey = supabaseKey; // Use anon key for development
 const supabaseAdmin = createClient(supabaseUrl, adminKey);
 
 module.exports = { supabase, supabaseAdmin };
