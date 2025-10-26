@@ -28,6 +28,7 @@ app.use(limiter);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/content', require('./routes/content'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/blog', require('./routes/blog'));
 
 // Health check
 app.get('/api/health', (req, res) => {

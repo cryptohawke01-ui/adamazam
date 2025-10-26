@@ -40,6 +40,14 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    font-size: 16px;
+    
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      font-size: 14px;
+    }
+  }
+
   body {
     font-family: ${props => props.theme.fonts.primary};
     background-color: ${props => props.theme.colors.background};
@@ -47,6 +55,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   a {
@@ -66,21 +75,32 @@ export const GlobalStyle = createGlobalStyle`
     background: none;
     color: inherit;
     font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
   }
 
   input, textarea {
     font-family: inherit;
     color: inherit;
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      padding: 0 15px;
+    }
   }
 
   .section {
     padding: 60px 0;
+    
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      padding: 40px 0;
+    }
   }
 
   .text-center {
@@ -101,5 +121,48 @@ export const GlobalStyle = createGlobalStyle`
 
   .mt-8 {
     margin-top: 2rem;
+  }
+
+  /* Mobile-specific improvements */
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    h1 {
+      font-size: 2rem !important;
+      line-height: 1.2;
+    }
+    
+    h2 {
+      font-size: 1.5rem !important;
+      line-height: 1.3;
+    }
+    
+    h3 {
+      font-size: 1.25rem !important;
+      line-height: 1.4;
+    }
+    
+    p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Improve touch targets */
+    button, a, input, textarea {
+      min-height: 44px;
+    }
+    
+    /* Better scrolling on mobile */
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, textarea, select {
+      font-size: 16px;
+    }
   }
 `;

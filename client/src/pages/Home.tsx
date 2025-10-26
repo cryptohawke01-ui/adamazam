@@ -12,12 +12,22 @@ const HeroSection = styled.section`
   background: linear-gradient(135deg, #000000 0%, #111111 100%);
   position: relative;
   overflow: hidden;
+  padding: 2rem 0;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    min-height: 90vh;
+    padding: 1rem 0;
+  }
 `;
 
 const HeroContent = styled.div`
   max-width: 800px;
   padding: 0 20px;
   z-index: 2;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0 15px;
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -25,9 +35,11 @@ const HeroTitle = styled.h1`
   font-weight: bold;
   margin-bottom: 1rem;
   color: ${props => props.theme.colors.text};
+  line-height: 1.1;
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     font-size: 2.5rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -36,9 +48,11 @@ const HeroSubtitle = styled.h2`
   font-weight: 300;
   margin-bottom: 2rem;
   color: ${props => props.theme.colors.accent};
+  line-height: 1.2;
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     font-size: 1.8rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -50,6 +64,7 @@ const HeroDescription = styled.p`
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     font-size: 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -65,6 +80,7 @@ const AuthorImage = styled.img`
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     width: 200px;
     height: 200px;
+    margin: 1.5rem auto;
   }
 `;
 
@@ -77,18 +93,27 @@ const BookImage = styled.img`
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     width: 150px;
+    margin: 1.5rem auto;
   }
 `;
 
 const ContentSection = styled.section`
   padding: 80px 0;
   background-color: ${props => props.theme.colors.background};
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 60px 0;
+  }
 `;
 
 const ContentContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0 15px;
+  }
 `;
 
 const ContentTitle = styled.h2`
@@ -96,6 +121,11 @@ const ContentTitle = styled.h2`
   text-align: center;
   margin-bottom: 3rem;
   color: ${props => props.theme.colors.text};
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const ContentText = styled.div`
@@ -105,6 +135,11 @@ const ContentText = styled.div`
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 1rem;
+    text-align: left;
+  }
 `;
 
 const Home: React.FC = () => {
@@ -138,7 +173,9 @@ const Home: React.FC = () => {
         <ContentContainer>
           <ContentTitle>About Adam</ContentTitle>
           <ContentText>
-            {content?.content || `Adam Muhammad Azam, the author of "Surviving 9/11: My American Dream Reclaimed," is an amazing individual whose life journey serves as evidence of the power of determination and resilience. Born with a firm spirit and a persistent drive for success, Azam's life took a surprising turn in the wake of the 9/11 terrorist attacks. Before this essential moment, he had attained significant success as a regional director at Snyder Communications (AT&T).`}
+            {typeof content?.content === 'string' 
+              ? content.content 
+              : `Adam Muhammad Azam, the author of "Surviving 9/11: My American Dream Reclaimed," is an amazing individual whose life journey serves as evidence of the power of determination and resilience. Born with a firm spirit and a persistent drive for success, Azam's life took a surprising turn in the wake of the 9/11 terrorist attacks. Before this essential moment, he had attained significant success as a regional director at Snyder Communications (AT&T).`}
           </ContentText>
         </ContentContainer>
       </ContentSection>

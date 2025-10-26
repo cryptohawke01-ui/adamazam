@@ -117,7 +117,9 @@ const Blog: React.FC = () => {
         <ContentSection>
           <ContentTitle>Stay Updated</ContentTitle>
           <div>
-            {content?.content || `Our blog will feature personal insights, professional experiences, and reflections on topics ranging from leadership and resilience to community service and the pursuit of success. Adam Azam's unique perspective, shaped by his experiences before and after 9/11, offers valuable lessons for anyone facing challenges in their personal or professional life.
+            {typeof content?.content === 'string' 
+              ? content.content 
+              : `Our blog will feature personal insights, professional experiences, and reflections on topics ranging from leadership and resilience to community service and the pursuit of success. Adam Azam's unique perspective, shaped by his experiences before and after 9/11, offers valuable lessons for anyone facing challenges in their personal or professional life.
 
 We'll be sharing stories of perseverance, tips for overcoming adversity, and thoughts on what it means to truly reclaim and achieve the American dream. Each post will be crafted to inspire and motivate our readers to pursue their own goals with determination and hope.`}
           </div>

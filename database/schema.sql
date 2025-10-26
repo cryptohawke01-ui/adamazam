@@ -32,6 +32,17 @@ CREATE TABLE menu_items (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create blogs table
+CREATE TABLE blogs (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  excerpt TEXT,
+  content TEXT NOT NULL,
+  published BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Insert default menu items
 INSERT INTO menu_items (label, url, order_index, is_active) VALUES
 ('HOME', '/', 1, true),
@@ -52,6 +63,7 @@ INSERT INTO website_content (section, title, content, order_index, is_active) VA
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE website_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE menu_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE blogs ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for public access to content and menu
 CREATE POLICY "Public read access for website_content" ON website_content
@@ -59,6 +71,9 @@ CREATE POLICY "Public read access for website_content" ON website_content
 
 CREATE POLICY "Public read access for menu_items" ON menu_items
   FOR SELECT USING (true);
+
+CREATE POLICY "Public read access for published blogs" ON blogs
+  FOR SELECT USING (published = true);
 
 -- Create policies for admin access
 CREATE POLICY "Admin full access for admin_users" ON admin_users
@@ -68,4 +83,7 @@ CREATE POLICY "Admin full access for website_content" ON website_content
   FOR ALL USING (true);
 
 CREATE POLICY "Admin full access for menu_items" ON menu_items
+  FOR ALL USING (true);
+
+CREATE POLICY "Admin full access for blogs" ON blogs
   FOR ALL USING (true);

@@ -34,6 +34,7 @@ const ContactGrid = styled.div`
   
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 `;
 
@@ -42,10 +43,18 @@ const ContactForm = styled.form`
   padding: 2rem;
   border-radius: 8px;
   border: 1px solid ${props => props.theme.colors.border};
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 1.5rem;
+  }
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 1.5rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Label = styled.label`
@@ -53,6 +62,11 @@ const Label = styled.label`
   margin-bottom: 0.5rem;
   color: ${props => props.theme.colors.text};
   font-weight: 500;
+  font-size: 0.9rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 0.85rem;
+  }
 `;
 
 const Input = styled.input`
@@ -67,6 +81,11 @@ const Input = styled.input`
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.accent};
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.6rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -85,6 +104,12 @@ const TextArea = styled.textarea`
     outline: none;
     border-color: ${props => props.theme.colors.accent};
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    min-height: 100px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -97,9 +122,15 @@ const SubmitButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
   
   &:hover {
     background-color: #0052a3;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -248,7 +279,9 @@ const Contact: React.FC = () => {
         <ContentSection>
           <ContentTitle>We'd Love to Hear From You</ContentTitle>
           <div>
-            {content?.content || `We're always interested in hearing from readers, potential collaborators, and anyone who has been inspired by Adam Azam's story. Whether you have questions about his book, want to discuss speaking opportunities, or simply want to share your own story of resilience, we'd love to connect with you.
+            {typeof content?.content === 'string' 
+              ? content.content 
+              : `We're always interested in hearing from readers, potential collaborators, and anyone who has been inspired by Adam Azam's story. Whether you have questions about his book, want to discuss speaking opportunities, or simply want to share your own story of resilience, we'd love to connect with you.
 
 Your message is important to us, and we'll do our best to respond to all inquiries within 24-48 hours. Thank you for taking the time to reach out and for being part of our community.`}
           </div>

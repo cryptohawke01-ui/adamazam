@@ -6,6 +6,7 @@ import AdminHeader from '../components/AdminHeader';
 import ContentManagement from '../components/admin/ContentManagement';
 import MenuManagement from '../components/admin/MenuManagement';
 import DashboardOverview from '../components/admin/DashboardOverview';
+import BlogManagement from '../components/admin/BlogManagement';
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -43,6 +44,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="/" element={<DashboardOverview />} />
           <Route path="/content" element={<ContentManagement />} />
           <Route path="/menu" element={<MenuManagement />} />
+          <Route path="/blog" element={<BlogManagement />} />
         </Routes>
       </MainContent>
     </DashboardContainer>

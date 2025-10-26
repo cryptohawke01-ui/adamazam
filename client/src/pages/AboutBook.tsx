@@ -36,6 +36,7 @@ const BookSection = styled.section`
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 2rem;
   }
 `;
 
@@ -45,6 +46,10 @@ const BookImage = styled.img`
   height: auto;
   box-shadow: 0 20px 40px rgba(0, 102, 204, 0.3);
   border-radius: 8px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    max-width: 300px;
+  }
 `;
 
 const BookInfo = styled.div`
@@ -55,18 +60,30 @@ const BookTitle = styled.h2`
   font-size: 2.5rem;
   color: ${props => props.theme.colors.text};
   margin-bottom: 1rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 2rem;
+  }
 `;
 
 const BookSubtitle = styled.h3`
   font-size: 1.5rem;
   color: ${props => props.theme.colors.accent};
   margin-bottom: 2rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 1.25rem;
+  }
 `;
 
 const BookDescription = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
   margin-bottom: 2rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 1rem;
+  }
 `;
 
 const ContentSection = styled.section`
@@ -110,7 +127,9 @@ const AboutBook: React.FC = () => {
         <ContentSection>
           <ContentTitle>Book Overview</ContentTitle>
           <div>
-            {content?.content || `This compelling memoir tells the story of Adam Muhammad Azam's remarkable journey through one of America's darkest periods. The book explores themes of resilience, identity, and the pursuit of the American dream in the face of unprecedented challenges.
+            {typeof content?.content === 'string' 
+              ? content.content 
+              : `This compelling memoir tells the story of Adam Muhammad Azam's remarkable journey through one of America's darkest periods. The book explores themes of resilience, identity, and the pursuit of the American dream in the face of unprecedented challenges.
 
 Through personal anecdotes and reflections, Azam shares how the events of September 11, 2001, transformed his life and career. From his successful position as a regional director at Snyder Communications (AT&T) to navigating the complex social and political landscape that followed, this book offers an intimate look at one man's determination to reclaim his place in American society.
 

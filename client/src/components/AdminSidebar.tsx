@@ -111,6 +111,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ isOpen, onClose }) => {
                 Menu Management
               </NavLinkStyled>
             </NavItem>
+            <NavItem>
+              <NavLinkStyled to="/admin/blog" onClick={onClose}>
+                Blog Management
+              </NavLinkStyled>
+            </NavItem>
           </NavList>
         </Nav>
       </SidebarContainer>

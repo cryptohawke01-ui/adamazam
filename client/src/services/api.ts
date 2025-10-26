@@ -77,3 +77,33 @@ export const updateMenu = (data: { id: string; [key: string]: any }) => {
 export const deleteMenu = (id: string) => {
   return api.delete(`/admin/menu/${id}`).then(res => res.data);
 };
+
+// Blog API calls
+export const getBlogs = () => {
+  return api.get('/blog').then(res => res.data);
+};
+
+export const getBlog = (id: string) => {
+  return api.get(`/blog/${id}`).then(res => res.data);
+};
+
+export const createBlog = (blogData: any) => {
+  return api.post('/admin/blog', blogData).then(res => res.data);
+};
+
+export const updateBlog = (data: { id: string; [key: string]: any }) => {
+  const { id, ...updateData } = data;
+  return api.put(`/admin/blog/${id}`, updateData).then(res => res.data);
+};
+
+export const deleteBlog = (id: string) => {
+  return api.delete(`/admin/blog/${id}`).then(res => res.data);
+};
+
+export const publishBlog = (id: string) => {
+  return api.put(`/admin/blog/${id}/publish`).then(res => res.data);
+};
+
+export const unpublishBlog = (id: string) => {
+  return api.put(`/admin/blog/${id}/unpublish`).then(res => res.data);
+};
