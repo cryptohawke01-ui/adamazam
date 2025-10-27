@@ -26,42 +26,6 @@ const PageTitle = styled.h1`
   }
 `;
 
-const BlogGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-`;
-
-const BlogCard = styled.article`
-  background-color: ${props => props.theme.colors.surface};
-  border-radius: 8px;
-  padding: 2rem;
-  border: 1px solid ${props => props.theme.colors.border};
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
-  }
-`;
-
-const BlogTitle = styled.h3`
-  font-size: 1.5rem;
-  color: ${props => props.theme.colors.text};
-  margin-bottom: 1rem;
-`;
-
-const BlogExcerpt = styled.p`
-  color: ${props => props.theme.colors.textSecondary};
-  line-height: 1.6;
-  margin-bottom: 1rem;
-`;
-
-const BlogDate = styled.span`
-  color: ${props => props.theme.colors.accent};
-  font-size: 0.9rem;
-`;
 
 const ContentSection = styled.section`
   color: ${props => props.theme.colors.textSecondary};
