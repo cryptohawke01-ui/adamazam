@@ -11,7 +11,7 @@ const PORT = process.env.PORT || config.server.port;
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || config.server.clientUrl || '*',
+  origin: process.env.CLIENT_URL || config.server.clientUrl || true,
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
